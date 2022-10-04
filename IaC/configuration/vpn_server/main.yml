@@ -1,0 +1,5 @@
+- hosts: vpns
+  become: true  
+  roles:
+    - role: vpn
+  

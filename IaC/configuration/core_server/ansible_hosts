@@ -1,0 +1,2 @@
+[core]
+core_Server ansible_ssh_host=10.0.1.4

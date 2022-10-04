@@ -1,0 +1,38 @@
+---
+## Install git
+- name: Install aptitude
+  apt:
+    name: aptitude
+    state: latest
+    update_cache: true
+
+- name: Install required system packages
+  apt:
+    pkg:
+      - git
+    state: latest
+
+## Directories creation
+- name: create directory if they don't exist
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ ADMINUSER }}"
+    group: "{{ ADMINUSER }}"
+    mode: 0775
+  loop:
+    - "{{ WORKING_DIR_BASE }}/{{ FRONT }}"
+    - "{{ WORKING_DIR_BASE }}/{{ CORE }}"
+
+
+## Clone repositories
+- name: Clone a repo with separate git directory
+  git:
+    repo: "{{ item.url }}" 
+    dest: "{{ item.path }}"
+    version: "{{ item.branch }}"
+    force: yes
+  loop:
+    - { url: "{{ BASE_URL_FRONT }}", branch: "main", path: "{{ WORKING_DIR_BASE }}/{{ FRONT }}" }
+    - { url: "{{ BASE_URL_BACK }}", branch: "main", path: "{{ WORKING_DIR_BASE }}/{{ CORE }}" }
+

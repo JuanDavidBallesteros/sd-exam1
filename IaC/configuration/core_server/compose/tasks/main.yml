@@ -1,0 +1,91 @@
+---
+# Install base
+- name: Install aptitude
+  apt:
+    name: aptitude
+    state: latest
+    update_cache: true
+
+- name: Install required system packages
+  apt:
+    pkg:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg
+      - lsb-release
+      - software-properties-common
+      - python3-pip
+      - virtualenv
+      - python3-setuptools
+    state: latest
+
+## Docker Install
+- name: Add Docker GPG apt Key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add Docker Repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu focal stable
+    state: present
+
+- name: Update apt and install docker-ce
+  apt:
+    name:
+    - docker-ce
+    - docker-ce-cli 
+    - containerd.io 
+    state: latest
+    update_cache: true
+
+- name: Install Docker Module for Python
+  pip:
+    name: 
+    - docker
+    - docker-compose
+
+### Move compose file
+- name: Create directory
+  file:
+    path: "{{ WORKING_DIR_BASE }}/orchestation"
+    state: directory
+
+- name: Copy file with owner and permissions
+  copy:
+    src: ../files/docker-compose.yml
+    dest: "{{ WORKING_DIR_BASE }}/orchestation"
+    owner: "{{ ADMINUSER }}"
+    group: "{{ ADMINUSER }}"
+    mode: '0777'
+
+#### Run compose
+
+- name: Tear down existing services
+  docker_compose:
+    files:
+    - "{{ WORKING_DIR_BASE }}/orchestation/docker-compose.yml"
+    project_src: "{{ WORKING_DIR_BASE }}/orchestation/docker-compose.yml"
+    state: absent
+
+- name: Create and start services
+  docker_compose:
+    files:
+    - "{{ WORKING_DIR_BASE }}/orchestation/docker-compose.yml"
+    project_src: "{{ WORKING_DIR_BASE }}/orchestation/docker-compose.yml"
+  register: output
+
+- debug:
+    var: output
+
+- name: Run `docker-compose up` again
+  docker_compose:
+    files:
+    - "{{ WORKING_DIR_BASE }}/orchestation/docker-compose.yml"
+    project_src: docker-compose.yml
+    build: no
+  register: output
+
+- debug:
+    var: output

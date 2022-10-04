@@ -1,0 +1,13 @@
+---
+## Install git
+- name: Install aptitude
+  apt:
+    name: aptitude
+    state: latest
+    update_cache: true
+
+- name: Run a basic script intall
+  ansible.builtin.script: ../files/configuration.sh
+
+- name: Run a configs script
+  ansible.builtin.script: ../files/finals.sh
