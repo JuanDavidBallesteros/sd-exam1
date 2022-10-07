@@ -1,0 +1,2 @@
+[vpns]
+vpn_server ansible_ssh_host=10.0.1.4

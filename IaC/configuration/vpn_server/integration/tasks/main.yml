@@ -1,0 +1,28 @@
+---
+## Install ansible
+- name: Install ansible
+  apt:
+    name:
+    - python3-pip
+    - ansible
+    state: latest
+    update_cache: true
+
+- pip:
+    name: ansible
+
+- name: Copy key
+  copy:
+    src: ../files/distri
+    dest: /home/adminUser/.ssh
+    owner: adminUser
+    group: adminUser
+    mode: '0400'
+
+- name: Copy automation files
+  copy:
+    src: ../files/automation
+    dest: /home/adminUser
+    owner: adminUser
+    group: adminUser
+
