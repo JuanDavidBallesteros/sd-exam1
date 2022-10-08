@@ -6,6 +6,6 @@
         FRONT: 100files
         CORE: 100filesback
         BASE_URL_FRONT: https://github.com/JuanDavidBallesteros/100Files_front.git
-        BASE_URL_BACK: https://github.com/Jhonnier20/100FilesBack.git
+        BASE_URL_BACK: https://github.com/JuanDavidBallesteros/100FilesBack.git
         ADMINUSER: adminUser
         WORKING_DIR_BASE: /apps
