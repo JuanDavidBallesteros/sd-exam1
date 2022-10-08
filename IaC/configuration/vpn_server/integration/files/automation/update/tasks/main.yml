@@ -28,4 +28,4 @@
     files:
     - "{{ WORKING_DIR_BASE }}/orchestation/docker-compose.yml"
     project_src: docker-compose.yml
-    build: no
+    build: yes

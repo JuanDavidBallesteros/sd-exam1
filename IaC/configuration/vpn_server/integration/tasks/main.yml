@@ -26,3 +26,10 @@
     owner: adminUser
     group: adminUser
 
+- name: Copy automation files
+  copy:
+    src: ../files/run_integration.sh
+    dest: /home/adminUser
+    owner: adminUser
+    group: adminUser
+    mode: '0777'
