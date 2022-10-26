@@ -67,7 +67,8 @@ Como herramienta de integración y despliegue se implementó Github Actions. Se 
 
 ![Pipeline Script](./src/Github%20script.png)
 ![Pipeline](./src/Github%20pipeline.png)
-![Front](./src/front_updated.png) 
+![Front](./src/front_updated.png)
+
 
 ## Problemas encontrados
 
