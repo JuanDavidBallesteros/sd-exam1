@@ -50,4 +50,31 @@ resource "azurerm_linux_virtual_machine" "vm" {
 }
 
 
+## Security Group
+resource "azurerm_network_security_group" "segGroupCore" {
+  name                = "acceptanceTestSecurityGroup2"
+  location            = azurerm_resource_group.resource_group.location
+  resource_group_name = azurerm_resource_group.resource_group.name
+
+  security_rule {
+    name                       = "2"
+    priority                   = 100
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "*"
+    source_port_range          = "*"
+    destination_port_ranges     = ["5000","2701","80","3000"]
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+  
+}
+
+resource "azurerm_network_interface_security_group_association" "secCore" {
+  network_interface_id      = azurerm_network_interface.vm_i.id
+  network_security_group_id = azurerm_network_security_group.segGroupCore.id
+}
+
+
+
 
