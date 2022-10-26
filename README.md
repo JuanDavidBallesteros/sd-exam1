@@ -26,15 +26,15 @@ Al ser una aplicación sencilla con una afluencia de usuarios minima, cerca de 2
 
 ![Diseño 1](./src/Infrastructura1.jpg)
 
-A medida que la aplicación tome fuerza en el mercado o tenga un mayor flujo de usuarios se se plantea esta segunda versión de la infrastructura en la cual existe redundancia entre zonas, lo que aumenta la dsiponimibilidad y puede mejorar la experiencia de los usuarios.
+A medida que la aplicación tome fuerza en el mercado o tenga un mayor flujo de usuarios se se plantea esta segunda versión de la infrastructura en la cual existe redundancia entre zonas, lo que aumenta la disponibilidad y puede mejorar la experiencia de los usuarios.
 
 ![Diseño 2](./src/Infrastructura2.jpg)
 
-Finalmente se plantea una infrastructura robusta que ademas de buscar la altadisponibilidad servirá para soportar servicios complejos y de alto costo computacional.
+Finalmente se plantea una infrastructura robusta que ademas de buscar la alta disponibilidad servirá para soportar servicios complejos y de alto costo computacional.
 
 ![Diseño 3](./src/Infrastructura3.jpg)
 
-> La implementaciones mostradas anterirmente son diseñadas bajo el marco de recursos ofrecidos por Azure como proveedor de la nube.
+> Las implementaciones mostradas anterirmente son diseñadas bajo el marco de recursos ofrecidos por Azure como proveedor de la nube.
 
 Elementos de seguridad:
 - Separación de subredes
@@ -57,6 +57,28 @@ Las llaves usadas estan guardas en secreto, por seguridad. En caso de ser necesa
 
 En la carpeta core se encuentra la configuración del servidor principal, en esta se pueden encontrar dos roles, el primero instala git, los repocitorios. El segundo role instala docker para poder correr los contenedores, el archivo de orquestación se encuentra en la carpeta orchestation, el cual corre todos los servicios en una red de contenedores exponiendo los puertos necesarios en el host.
 
+## Cloud provider
+
+Como proveedor de nube utilizamos Azure, teniendo en cuenta la suscripcion que nos otorga por ser estudiantes de la universidad ICESI (Azure for Students). Dicha suscripcion nos otorga 100 creditos para realizar nuestros respectivos montajes.
+
 ## Integración
 
 Como herramienta de integración y despliegue se implementó... 
+
+## Problemas encontrados
+
+### Asignacion de Ip publica al load balancer
+
+En nuestra infraestructura teniamos una ip publica asignada al load balancer, pero al ingresar al Azure portal para conocer la ip que quedaba asignada, nos llevamos la sorpresa de que no aparecia. Debimos leer la documentacion y nos dimos cuenta que se debia realizar una regla de NAT, para decirle al load balanacer por que puerto entrarian las peticiones y por donde saldrian, ademas de esto debiamos configurar hacia donde saldrian las peticiones, en nuestro caso debe apuntar a la maquina donde estan nuestros servicios.
+
+### Cambio de bastion por una VPN
+
+En nuestro diseño incial, se habia pensado en implementar un bastion para acceder a nuestro servidor, pero nos dimos cuenta que el bastion no permite acceder por ssh al servidor, debido a esto se debio replantear el diseño e implementar una vpn, que por medio de esta se nos fuera posible acceder al servidor.
+
+### Subir archivo al bucket
+
+Al inicio se tuvieron problemas al cargar el archivo al frontend para enviarlo al backend, debimos realizar la conversion del archivo a un formato valido para poder ser recibido en el backend, luego de haberlo recibido se debio realizar la correspondiente decodificacion desde el backend para poder hacer el envio al bucket.
+
+### Renderizacion de la lista
+
+Al momento de realizar el llamado en la base de datos para mostrar la informacion de los archivos, se tuvo problemas con el useEffect de React, ya que se generaba un ciclo infinito de peticiones, es por esto que utilizamos un boton de refresh para cargar nuevamente la informacion. 
