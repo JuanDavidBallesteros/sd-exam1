@@ -1,6 +1,6 @@
 - hosts: vpns
   become: true  
   roles:
-    # - role: vpn
+    - role: vpn
     - role: integration
   

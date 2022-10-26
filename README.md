@@ -59,4 +59,8 @@ En la carpeta core se encuentra la configuración del servidor principal, en est
 
 ## Integración
 
-Como herramienta de integración y despliegue se implementó... 
+Como herramienta de integración y despliegue se implementó Github Actions. Se realizó la implementación de la construcción de la imagen sin correr test, al finalizar la construcción se realiza la actualización del código en el servidor y el redespliegue de las aplicaciones. A continuación se presentan las evidencias visuales.
+
+![Pipeline Script](./src/Github%20script.png)
+![Pipeline](./src/Github%20pipeline.png)
+![Front](./src/front_updated.png)

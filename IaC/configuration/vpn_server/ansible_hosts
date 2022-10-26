@@ -1,2 +1,2 @@
 [vpns]
-vpn_server ansible_ssh_host=20.120.108.106
+vpn_server ansible_ssh_host=20.168.218.240
