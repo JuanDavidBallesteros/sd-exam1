@@ -10,14 +10,18 @@ services:
       - 3000:3000
 
   back:
+    hostname: back
     container_name: back
     build:
       context: ../100filesback/
       dockerfile: Dockerfile
+    environment:
+      MONGOURI: mongodb://root:example@mongo:27017/core?authSource=admin
     ports:
       - 5000:5000
 
   mongo:
+    hostname: mongo
     image: mongo
     restart: always
     ports:
